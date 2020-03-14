@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const path = require('path');
 const dotenv = require('dotenv').config({
-  path: path.join(__dirname, '../.env')
+  path: './.env' //path.join(__dirname, '../.env')
 });
 
-const connection = mongoose.connect(process.env.CONNSTRING, { useNewUrlParser: true });
+const connection = mongoose.connect(process.env.CONNSTRING, {
+  useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false,
+});
 
 
 const songSchema = mongoose.Schema({
