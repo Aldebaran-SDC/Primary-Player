@@ -1,0 +1,16 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 60
+      arrivalRate: 1
+      name: "Testing 10 GET requests to random song IDs"
+    # - duration: 1
+    #   arrivalRate: 100
+    #   name: "Testing 100 GET requests to random song IDs"
+    # - duration: 10
+    #   arrivalRate: 1000
+    #   name: "Testing 1000 GET requests/sec for 10 seconds"
+scenarios:
+  - flow:
+      - get:
+          url: "/songs/10000000"

@@ -5,9 +5,9 @@ const dotenv = require('dotenv').config({
   path: './.env' //path.join(__dirname, '../.env')
 });
 
-const connection = mongoose.connect(process.env.CONNSTRING, {
-  useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false,
-});
+// const connection = mongoose.connect(process.env.CONNSTRING, {
+//   useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false,
+// });
 
 
 const songSchema = mongoose.Schema({
