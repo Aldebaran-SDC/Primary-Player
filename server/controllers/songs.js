@@ -7,13 +7,13 @@ var counter = 10000010;
 
 module.exports.getSong = (req, res) => {
   //This is for Cassandra:
-  const getSongById = `SELECT * FROM songs WHERE id = ${req.params.id};`;
-  client.execute(getSongById, (err, results) => {
+  const getSongById = 'SELECT * FROM songs WHERE id = ?';
+  client.execute(getSongById, [req.params.id], { prepare: true }, (err, results) => {
     if (err) {
       console.log('Error from Cqlsh query getSongById: ', err);
       res.status(404).send('song not found');
     } else {
-      console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
+      // console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
       res.send(results.rows[0]);
     }
   });
@@ -40,7 +40,7 @@ module.exports.getSongs = (req, res) => {
 
 module.exports.addSong = (req, res) => {
   //   This is for Cassandra:
-  console.log('this is the req.body: ', req.body, '\nthis is counter (pre-read): ', counter);
+  // console.log('this is the req.body: ', req.body);
   // let filename = path.basename('/counter.js');
   // fs.readFile(filename, 'utf8', (err, data) => {
   //   if (err) {
@@ -48,25 +48,18 @@ module.exports.addSong = (req, res) => {
   //   }
   //   counter = parseInt(data);
   //   console.log('this is counter (from inside of readfile: ', counter);
-  let _id = counter;
-  let _author = req.body.author;
-  let _title = req.body.title;
-  let _genre = req.body.genre;
-  let _tags = req.body.tags;
-  let _artwork_url = req.body.artwork_url;
-  let _audio_file_path = req.body.audio_file_path;
-  let _like_count = req.body.like_count;
-  let _play_count = req.body.play_count;
-  let _repost_count = req.body.repost_count;
+  // let _id = counter;
 
-  const insert = `INSERT into player.songs(id,author,title,genre,tags,artwork_url,audio_file_path,like_count,play_count,repost_count) values (${_id}, ${_author}, ${_title}, ${_genre}, ${_tags}, ${_artwork_url}, ${_audio_file_path}, ${_like_count}, ${_play_count}, ${_repost_count});`;
+  const insert = 'INSERT into player.songs(id,author,title,genre,tags,artwork_url,audio_file_path,like_count,play_count,repost_count) values (?,?,?,?,?,?,?,?,?,?)';
 
-  client.execute(insert, (err, result) => {
+  const paramValues = [10000000, req.body.author, req.body.title, req.body.genre, req.body.tags, req.body.artwork_url, req.body.audio_file_path, req.body.like_count, req.body.play_count, req.body.repost_count];
+
+  client.execute(insert, paramValues, { prepare: true }, (err, result) => {
     if (err) {
       console.log('song POST failed: ', err);
     } else {
       // counter++;
-      console.log('song POST sucessful!! Here is the result: ', result, 'and this is the current value of counter: ', counter);
+      console.log('song POST sucessful!! Here is the result: ', result);
       res.status(200).send(result);
 
       // counter = counter.toString();

@@ -1,5 +1,5 @@
 config:
-  target: 'http://localhost:4000'
+  target: "http://localhost:3004"
   phases:
     - duration: 10
       arrivalRate: 1
@@ -15,26 +15,26 @@ config:
     - duration: 60
       arrivalRate: 100
       name: "100 plateau for 1 min"
-    # - duration: 240
-    #   arrivalRate: 100
-    #   rampTo: 1000
-    #   name: "rampUp 100-1000 in 4 mins"
-    # - duration: 60
-    #   arrivalRate: 100
-    #   name: "1000 plateau for 1 min"
+    - duration: 240
+      arrivalRate: 100
+      rampTo: 1000
+      name: "rampUp 100-1000 in 4 mins"
+    - duration: 60
+      arrivalRate: 100
+      name: "1000 plateau for 1 min"
 scenarios:
   - flow:
-    - get:
-        url: "/songs/10000000"
-    # - post:
-    #     url: "/songs"
-    #     form:
-    #       author: "Steve"
-    #       title: "Turkeypants"
-    #       genre: "Janky"
-    #       tags: "You're it!"
-    #       artwork_url: "http://d2tlnaqrf4t9d7.cloudfront.net/playerPhotos/primary858.jpeg"
-    #       audio_file_path: "http://d2kzfado6qqgq8.cloudfront.net/Electro+City.mp3"
-    #       like_count: 23
-    #       play_count: 21
-    #       repost_count: 33333
+      - get:
+          url: "/songs/10000000"
+      - post:
+          url: "/songs"
+          form:
+          author: "Steve"
+          title: "Turkeypants"
+          genre: "Janky"
+          tags: "You're it!"
+          artwork_url: "http://d2tlnaqrf4t9d7.cloudfront.net/playerPhotos/primary858.jpeg"
+          audio_file_path: "http://d2kzfado6qqgq8.cloudfront.net/Electro+City.mp3"
+          like_count: 23
+          play_count: 21
+          repost_count: 33333

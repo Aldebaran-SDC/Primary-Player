@@ -8,8 +8,11 @@ const axios = require('axios');
 const moment = require('moment');
 
 const localUrl = 'http://localhost:3004';
-const prodUrl = 'http://ec2-52-41-170-203.us-west-2.compute.amazonaws.com:3004';
-const API_URL = (window.location.host === 'localhost:3004') ? localUrl : prodUrl;
+// former prodUrls = 'http://ec2-52-41-170-203.us-west-2.compute.amazonaws.com:3004';
+//                 & 'http://ec2-54-176-133-165.us-west-1.compute.amazonaws.com:3004';
+const prodUrl = 'http://ec2-54-177-234-64.us-west-1.compute.amazonaws.com:3004';
+// const API_URL = (window.location.host === 'localhost:3004') ? localUrl : prodUrl;
+const API_URL = (window.location.hostname === 'localhost') ? localUrl : prodUrl;
 
 class PrimaryPlayer extends React.Component {
   constructor(props) {
@@ -32,7 +35,9 @@ class PrimaryPlayer extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://ec2-34-220-99-82.us-west-2.compute.amazonaws.com:8080/comment/${this.state.songId}`)
+    console.log('this is the songId: ', this.state.songId, 'this is the API_URL: ', API_URL)
+    // axios.get(`http://ec2-34-220-99-82.us-west-2.compute.amazonaws.com:8080/comment/${this.state.songId}`)
+    axios.get(`http://3.101.21.253:8080/comment/${this.state.songId}`)
       .then((response) => {
         // handle success
         // console.log('comments: ', response.data);
@@ -51,7 +56,8 @@ class PrimaryPlayer extends React.Component {
   }
 
   getSong(loadSongCallback) {
-    axios.get(`${API_URL}/songs/${this.state.songId}`)
+    // axios.get(`${API_URL}/songs/${this.state.songId}`)  changed by Shain 4/20/20
+    axios.get(`${localUrl}/songs/${this.state.songId}`)
       .then((response) => {
         // handle success
         const returnedSong = response.data;
@@ -66,7 +72,7 @@ class PrimaryPlayer extends React.Component {
       })
       .catch((error) => {
         // handle error
-        console.log(error);
+        console.log('This is the error from get request: ', error);
       })
       .finally(() => {
         // always executed
@@ -81,19 +87,19 @@ class PrimaryPlayer extends React.Component {
     });
   }
 
-  updatePlayedPercentage(newTime, totalDuration){
+  updatePlayedPercentage(newTime, totalDuration) {
     let percentage = (newTime * 100) / totalDuration;
     this.setState({
       playedPercentage: percentage
     });
   }
 
-  formatTime(time){
+  formatTime(time) {
     let minutes = "0";
     let seconds = "0";
     if (time > 60) {
-      minutes = Math.floor( time / 60 );
-      seconds = Math.floor( time % 60 );
+      minutes = Math.floor(time / 60);
+      seconds = Math.floor(time % 60);
     } else {
       seconds = time.toFixed(0);
     }

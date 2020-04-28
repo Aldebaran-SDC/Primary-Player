@@ -12,7 +12,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          bucket: 'rpt-soundcloud',
+          bucket: 'sdc-primary-player',
         },
         files: [
           {
