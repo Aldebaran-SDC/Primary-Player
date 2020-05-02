@@ -10,7 +10,9 @@ const moment = require('moment');
 const localUrl = 'http://localhost:3004';
 // former prodUrls = 'http://ec2-52-41-170-203.us-west-2.compute.amazonaws.com:3004';
 //                 & 'http://ec2-54-176-133-165.us-west-1.compute.amazonaws.com:3004';
-const prodUrl = 'http://ec2-54-177-234-64.us-west-1.compute.amazonaws.com:3004';
+// 5/1 Server Module 1 &  'http://ec2-54-177-234-64.us-west-1.compute.amazonaws.com:3004';
+const prodUrl = 'http://ec2-54-193-221-123.us-west-1.compute.amazonaws.com:80';
+  // 5/1 The above prodUrl now points to the NginX Load-Balancer
 // const API_URL = (window.location.host === 'localhost:3004') ? localUrl : prodUrl;
 const API_URL = (window.location.hostname === 'localhost') ? localUrl : prodUrl;
 
@@ -37,7 +39,8 @@ class PrimaryPlayer extends React.Component {
   componentDidMount() {
     console.log('this is the songId: ', this.state.songId, 'this is the API_URL: ', API_URL)
     // axios.get(`http://ec2-34-220-99-82.us-west-2.compute.amazonaws.com:8080/comment/${this.state.songId}`)
-    axios.get(`http://3.101.21.253:8080/comment/${this.state.songId}`)
+      // This url is Taka's load balancer: 3.101.21.253:8000
+    axios.get(`http://3.101.21.253:8000/comment/${this.state.songId}`)
       .then((response) => {
         // handle success
         // console.log('comments: ', response.data);
@@ -56,8 +59,8 @@ class PrimaryPlayer extends React.Component {
   }
 
   getSong(loadSongCallback) {
-    // axios.get(`${API_URL}/songs/${this.state.songId}`)  changed by Shain 4/20/20
-    axios.get(`${localUrl}/songs/${this.state.songId}`)
+    axios.get(`${API_URL}/songs/${this.state.songId}`)  //changed by Shain 4/20/20
+    //axios.get(`${localUrl}/songs/${this.state.songId}`)
       .then((response) => {
         // handle success
         const returnedSong = response.data;
