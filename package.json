@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "jest",
-    "serve": "nodemon --inspect server/index.js",
+    "serve": "nodemon server/index.js",
     "build-sass": "node-sass -w client/src/css -o client/dist",
     "build-react": "webpack --watch",
     "seed": "node ./database/seed.js"

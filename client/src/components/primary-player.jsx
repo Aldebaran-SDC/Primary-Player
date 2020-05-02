@@ -11,7 +11,7 @@ const localUrl = 'http://localhost:3004';
 // former prodUrls = 'http://ec2-52-41-170-203.us-west-2.compute.amazonaws.com:3004';
 //                 & 'http://ec2-54-176-133-165.us-west-1.compute.amazonaws.com:3004';
 // 5/1 Server Module 1 &  'http://ec2-54-177-234-64.us-west-1.compute.amazonaws.com:3004';
-const prodUrl = 'http://ec2-54-193-221-123.us-west-1.compute.amazonaws.com:80';
+const prodUrl = 'http://ec2-54-193-221-123.us-west-1.compute.amazonaws.com';
   // 5/1 The above prodUrl now points to the NginX Load-Balancer
 // const API_URL = (window.location.host === 'localhost:3004') ? localUrl : prodUrl;
 const API_URL = (window.location.hostname === 'localhost') ? localUrl : prodUrl;

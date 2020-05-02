@@ -9,12 +9,12 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['fec-primary-player'],
+  app_name: ['SDC-primary-player'],
   /**
    * Your New Relic license key.
    */
   // license_key: 'ee56187a3bd37eb6d85becda90a5815a4d4fNRAL',
-  license_key: 'ee56187a3bd37eb6d85becda90a5815a4d4fNRAL',
+  license_key: '25b825564df7119af45bf89a1cbaf3f10c7aNRAL',
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
