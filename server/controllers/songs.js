@@ -2,47 +2,48 @@ const redis = require('redis');
 const Song = require('../../database/index');
 const client = require('../../database/cassandraIndex.js');
 
-const redisClient = redis.createClient(6379, '52.9.137.255');
+//const redisClient = redis.createClient(6379, '52.9.137.255');
 
 module.exports.getSong = (req, res) => {
-  redisClient.get(req.params.id, (err, reply) => {
+  // redisClient.get(req.params.id, (err, reply) => {
+  //   if (err) {
+  //     // console.log('Redis connection err: ', err);
+  //     res.status(404).send('Redis trouble)');
+  //     return;
+  //   }
+  //   if (reply != null) {
+  //     // console.log('This is the JSON.parse(reply): ', JSON.parse(reply));
+  //     res.send(JSON.parse(reply));
+  //   } else {
+  //     // console.log('Redis reply was null apparently, here is the reply: ', reply);
+  //     //   //This is for Cassandra:
+  //     const getSongById = 'SELECT * FROM songs WHERE id = ?';
+  //     client.execute(getSongById, [req.params.id], { prepare: true }, (error, results) => {
+  //       if (error) {
+  //         //    console.log('Error from Cqlsh query getSongById: ', error);
+  //         res.status(404).send('song not found');
+  //       } else {
+  //         //   console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
+  //         redisClient.set(req.params.id, JSON.stringify(results.rows[0]));
+  //         res.send(results.rows[0]);
+  //       }
+  //     });
+  //   }
+  //   // }
+  // });
+  // };
+  // //This is for Cassandra:
+  const getSongById = 'SELECT * FROM songs WHERE id = ?';
+  client.execute(getSongById, [req.params.id], { prepare: true }, (err, results) => {
     if (err) {
-      // console.log('Redis connection err: ', err);
-      res.status(404).send('Redis trouble)');
-      return;
-    }
-    if (reply != null) {
-      // console.log('This is the JSON.parse(reply): ', JSON.parse(reply));
-      res.send(JSON.parse(reply));
+      console.log('Error from Cqlsh query getSongById: ', err);
+      res.status(404).send('song not found');
     } else {
-      // console.log('Redis reply was null apparently, here is the reply: ', reply);
-      //   //This is for Cassandra:
-      const getSongById = 'SELECT * FROM songs WHERE id = ?';
-      client.execute(getSongById, [req.params.id], { prepare: true }, (error, results) => {
-        if (error) {
-          //    console.log('Error from Cqlsh query getSongById: ', error);
-          res.status(404).send('song not found');
-        } else {
-          //   console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
-          redisClient.set(req.params.id, JSON.stringify(results.rows[0]));
-          res.send(results.rows[0]);
-        }
-      });
+      // console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
+      res.send(results.rows[0]);
     }
-    // }
   });
 };
-// //This is for Cassandra:
-// const getSongById = 'SELECT * FROM songs WHERE id = ?';
-// client.execute(getSongById, [req.params.id], { prepare: true }, (err, results) => {
-//   if (err) {
-//     console.log('Error from Cqlsh query getSongById: ', err);
-//     res.status(404).send('song not found');
-//   } else {
-//     // console.log('Results from cqlsh query getSongByID: ', results.rows[0]);
-//     res.send(results.rows[0]);
-//   }
-// });
 // This is for Mongo.db:
 // console.log("cheese", req.params.id);
 // Song.findById(req.params.id)

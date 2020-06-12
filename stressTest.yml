@@ -19,9 +19,9 @@ config:
       arrivalRate: 100
       rampTo: 1000
       name: "rampUp 100-1000 in 4 mins"
-    - duration: 60
-      arrivalRate: 100
-      name: "1000 plateau for 1 min"
+    # - duration: 60
+    #   arrivalRate: 100
+    #   name: "1000 plateau for 1 min"
 scenarios:
   - flow:
       - get:

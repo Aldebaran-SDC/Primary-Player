@@ -2,9 +2,9 @@
 const cassandra = require('cassandra-driver');
 
 const client = new cassandra.Client({
-  // contactPoints: ['localhost'],
-  contactPoints: ['54.219.17.29', '52.53.109.21', '18.144.111.167'],
-  localDataCenter: 'us-west',
+  contactPoints: ['localhost'],
+  // contactPoints: ['54.219.17.29', '52.53.109.21', '18.144.111.167'],
+  localDataCenter: 'datacenter1', // this is for deployment =>'us-west',
   keyspace: 'player',
 });
 client.connect((err) => {
