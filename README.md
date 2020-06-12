@@ -13,14 +13,25 @@ This primary-player module is one of three microservices which are coordinated b
     • Increased the database to hold 10M unique records, and tested query speeds for PostgreSQL and Cassandra
 ![PostgreSQL query timing](images/postgresQueryTimings.png)
 ![Cassandra query timing](images/cassandraQueryTimings.png)
+
     • Although PostgreSQL was faster, I chose Cassandra because of its resiliency - given the structure of Cassandra in deployment (data sharded, replicated, and distributed across 3 nodes)
+    
     • Locally stress tested microservice and proxy using Artillery.io and newRelic to ramp up RPS from 1 to 1000.
 ![local stress tests](images/localTests.png)
+
     • Deployed to AWS EC2s and horizontally scaled using Nginx load balancer, 15 app servers, Redis caching, and 3 Cassandra nodes - optimizing throughput
+    
 ![horizontal scaling](images/horizontalScaling.png)
+
     • Stress tested deployment using loader.io, determining throughput to be 3800 RPS with < 1% error rate
+    
 ![deployment stress test 2000](images/loaderTest2000.png)
 ![deployment stress test 4000](images/loaderTest4000.png)
+
+
+
+
+
 
 
 # primary-player:
@@ -31,7 +42,7 @@ This primary-player module is one of three microservices which are coordinated b
     "build-react": "webpack --watch",
     "seed": "node ./database/seed.js"
 
-# Important -- This app uses environment variables, which are defined in a .env file. The .env files are not saved to the repo for security reasons. Anytime this app is deployed to a new environment, the environment variables have to be accounted for, in this case, as connection uri to connect to the database, also which port the server is running on is defined in the .env file.
+ Important -- This app uses environment variables, which are defined in a .env file. The .env files are not saved to the repo for security reasons. Anytime this app is deployed to a new environment, the environment variables have to be accounted for, in this case, as connection uri to connect to the database, also which port the server is running on is defined in the .env file.
 
 # Seed the database:
 npm run seed
